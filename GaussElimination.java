@@ -10,18 +10,19 @@ public class GaussElimination {
 
         prop= Integer.parseInt(JOptionPane.showInputDialog(null, "ÁLGEBRA LINEAR\n" +
                                  "Método de Gauss\n\nInforme a proporção da matriz: "));
-        double matriz[][]= new double[prop][prop+1];
-        double vetorResultado[]= new double[prop];
-        JOptionPane.showMessageDialog(null, "Matriz(" + prop +"x" + prop+")"); 
+        double matriz[][]= new double[prop][prop+1]; //Matriz que será utilizada no programa
+        double vetorResultado[]= new double[prop]; //Vetor resultado
 
         //Processo de obtenção dos dados da matriz
         for (int linha = 0; linha < matriz.length; linha++) {
             for (int coluna = 0; coluna < matriz[linha].length; coluna++) {
-                if (prop + 1 != coluna+1) {
-                    matriz[linha][coluna]= Double.parseDouble(JOptionPane.showInputDialog("Insira o termo da linha " + (linha + 1) + " e coluna " + (coluna + 1) + ": "));
+                if (coluna==prop) {
+                    matriz[linha][coluna]= Double.parseDouble(JOptionPane.showInputDialog("MATRIZ(" + prop +"x" + prop+")"+
+                    "\n\nInsira o resultado da equação da linha " + (linha + 1) + ": "));
                 }
                 else {
-                    matriz[linha][coluna]= Double.parseDouble(JOptionPane.showInputDialog("Insira o resultado da equação da linha " + (linha + 1) + ": "));
+                    matriz[linha][coluna]= Double.parseDouble(JOptionPane.showInputDialog("MATRIZ(" + prop +"x" + prop+")"+ 
+                    "\n\nInsira o termo da linha " + (linha + 1) + " e coluna " + (coluna + 1) + ": "));
                 }
 
             }
@@ -42,15 +43,15 @@ public class GaussElimination {
         //Transformando matriz inicial em matriz pivô
         for (i=0;i<prop;i++){               
             for (k=1;k<prop;k++){
-                if (matriz[i][i]==0){ //realiza a troca das linhas caso um termo pivô seja igual a zero
+                if (matriz[i][i]==0){ //realiza a troca das linhas caso o primeiro termo seja igual a zero
                     for (j=0;j<=prop;j++){
                         double pivo=matriz[i][j];
                         matriz[i][j]=matriz[k][j]; 
                         matriz[k][j]=pivo;
                     }
                 }
-                else if(matriz[i][i]>matriz[k][i] && matriz[k][i]>=1){ //Verifica se há algum termo a21 menor que o a11 para realizar a troca de linha
-                    for (j=0;j<=prop;j++){
+                else if(matriz[i][i]>matriz[k][i] && matriz[k][i]>=1){ //Verifica se há algum termo amxn menor que o a11 para realizar a troca de linha
+                    for (j=0;j<=prop;j++){                             //pois o ideal é que o elemento a11 seja igual a 1.
                         double pivo=matriz[i][j];
                         matriz[i][j]=matriz[k][j]; 
                         matriz[k][j]=pivo;
@@ -58,6 +59,7 @@ public class GaussElimination {
                 }    
             }
         }
+        
         //Imprimindo Matriz Pivô
         String imprimeMatrizPivo="";
             for (k=0;k<prop;k++){
@@ -69,33 +71,47 @@ public class GaussElimination {
             } 
         JOptionPane.showMessageDialog(null, "MATRIZ PIVÔ:\n" +imprimeMatrizPivo);    
 
-
-        
-        /*for (k = 0; k < matriz.length - 1; k++) {
-                //realiza o escalonamento
-                for (int m = k + 1; m < matriz.length; m++) {
-                    double F = -matriz[m][k] / matriz[k][k];
-                    matriz[m][k] = 0; //evita uma iteração
-                    for (int l = k + 1; l < matriz.length; l++) {
-                        matriz[m][l] = matriz[m][l] + F * matriz[k][l];
-                        JOptionPane.showMessageDialog(null, matriz[m][l]);
-                    }
-                }
+        //Metodo de eliminação
+        double res;
+        for (i=0;i<prop-1;i++)                     
+            for (k=1;k<prop;k++){
+                res=matriz[k][i]/matriz[i][i]; //A divisão pelo coeficiente permite encontrarmos os valores finais dos termos independentes;
+                    for (j=0;j<=prop;j++){
+                        matriz[k][j]=matriz[k][j]-res*matriz[i][j];
+                    } //A partir daqui, todos os elementos abaixo dos pivôs são eliminados. Ou seja, ficam iguais a zero.
         }
-        //ETAPA DE RESOLUÇÃO DO SISTEMA
-        double[] X = new double[matriz.length];
-        for (i = matriz.length - 1; i >= 0; i--) {
-            X[i] = b[i];
-            for (int j = i + 1; j < matriz.length; j++) {
+
+        //Imprimindo Matriz Final
+        String imprimeMatrizFinal="";
+            for (k=0;k<prop;k++){
+                for (int q=0;q<=prop;q++){
+                    imprimeMatrizFinal+=matriz[k][q];
+                    imprimeMatrizFinal+="    ";
+                }
+                imprimeMatrizFinal+="\n";
+            } 
+        JOptionPane.showMessageDialog(null, "MATRIZ FINAL:\n" +imprimeMatrizFinal);
+        
+        //Etapa final da resolução do sistema linear
+        double[] X = new double[matriz.length]; //X vai servir como um vetor auxiliar para armazenar o resultado.
+        for (i=matriz.length - 1; i>=0; i--) {              //o for faz com que os termos do lado direito da matriz
+            X[i] = matriz[i][prop];                         //ou seja, os resultados, sejam calculados: a11 + a12 = x1
+            for (j = i + 1; j < matriz.length; j++) {
                 X[i] = X[i] - X[j] * matriz[i][j];
             }
-
             X[i] = X[i] / matriz[i][i];
+            vetorResultado[i]=X[i];
         }
-        return X;
-*/
-    }
 
+        //Imprimindo os valores de x1, x2, ... , xn.
+        String imprimeResultadoFinal="";
+        for(i=0;i<prop;i++) {
+            imprimeResultadoFinal+="x" + (i+1) + "= ";
+            imprimeResultadoFinal+=vetorResultado[i];
+            imprimeResultadoFinal+="\n";
+        }
+        JOptionPane.showMessageDialog(null,"RESULTADO FINAL:\n" + imprimeResultadoFinal);                      
+    }
 }
 
 
