@@ -3,12 +3,13 @@ import javax.swing.*;
 public class GaussElimination {
     public static void main(String[] args) {
         int prop;
-        int k;
+        int k=0;
         int i;
-        int j;
+        int j=0;
         
 
-        prop= Integer.parseInt(JOptionPane.showInputDialog(null, "Informe a proporção da matriz: "));
+        prop= Integer.parseInt(JOptionPane.showInputDialog(null, "ÁLGEBRA LINEAR\n" +
+                                 "Método de Gauss\n\nInforme a proporção da matriz: "));
         double matriz[][]= new double[prop][prop+1];
         double vetorResultado[]= new double[prop];
         JOptionPane.showMessageDialog(null, "Matriz(" + prop +"x" + prop+")"); 
@@ -39,24 +40,36 @@ public class GaussElimination {
 
     
         //Transformando matriz inicial em matriz pivô
-        for (i=0;i<prop;i++)                
-            for (k=i+1;k<prop;k++)
+        for (i=0;i<prop;i++){               
+            for (k=1;k<prop;k++){
+                if (matriz[i][i]==0){ //realiza a troca das linhas caso um termo pivô seja igual a zero
                     for (j=0;j<=prop;j++){
                         double pivo=matriz[i][j];
-                        matriz[i][j]=matriz[k][j]; //troca as linhas da matriz
+                        matriz[i][j]=matriz[k][j]; 
                         matriz[k][j]=pivo;
                     }
-    
+                }
+                else if(matriz[i][i]>matriz[k][i] && matriz[k][i]>=1){ //Verifica se há algum termo a21 menor que o a11 para realizar a troca de linha
+                    for (j=0;j<=prop;j++){
+                        double pivo=matriz[i][j];
+                        matriz[i][j]=matriz[k][j]; 
+                        matriz[k][j]=pivo;
+                    }
+                }    
+            }
+        }
         //Imprimindo Matriz Pivô
         String imprimeMatrizPivo="";
-            for (i=0;i<prop;i++){
-                for (j=0;j<=prop;j++){
-                    imprimeMatrizPivo+=matriz[i][j];
+            for (k=0;k<prop;k++){
+                for (int q=0;q<=prop;q++){
+                    imprimeMatrizPivo+=matriz[k][q];
                     imprimeMatrizPivo+="    ";
                 }
                 imprimeMatrizPivo+="\n";
             } 
-            JOptionPane.showMessageDialog(null, "MATRIZ PIVÔ:\n" +imprimeMatrizPivo);    
+        JOptionPane.showMessageDialog(null, "MATRIZ PIVÔ:\n" +imprimeMatrizPivo);    
+
+
         
         /*for (k = 0; k < matriz.length - 1; k++) {
                 //realiza o escalonamento
@@ -76,6 +89,7 @@ public class GaussElimination {
             for (int j = i + 1; j < matriz.length; j++) {
                 X[i] = X[i] - X[j] * matriz[i][j];
             }
+
             X[i] = X[i] / matriz[i][i];
         }
         return X;
@@ -83,4 +97,5 @@ public class GaussElimination {
     }
 
 }
+
 
