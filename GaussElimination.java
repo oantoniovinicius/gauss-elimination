@@ -25,7 +25,7 @@ public class GaussElimination {
             }
         }
 
-        //Matriz Inicial
+        //Imprimindo Matriz Inicial
         String imprimeMatriz="";
         for (i=0;i<prop;i++){
             for (j=0;j<=prop;j++){
@@ -34,35 +34,30 @@ public class GaussElimination {
             }
             imprimeMatriz+="\n";
         }
-        JOptionPane.showMessageDialog(null, "MATRIZ INICIAL\n" +imprimeMatriz);
+        JOptionPane.showMessageDialog(null, "MATRIZ INICIAL:\n" +imprimeMatriz);
 
-        
-       //Equacao inicial
-       /*String resultado2="";
-       for(i = 0; i < prop; i++) { 
-        for(j = 0; j < prop + 1; j++) {
-            if(j < prop){
-                if (i >= 0 && j > 0){
-                        if ( j > 0){
-                            if (matriz[i][j] > 0)
-                            System.out.print("+ " + matriz[i][j] + " x" + (j+1) +  " ");
-                            else
-                            System.out.print(matriz[i][j] + " x" + (j+1) +  " ");
-                        }
-                            else{
-                                if (matriz[i][j] < 0)
-                                System.out.print(" - " + matriz[i][j] + " x" +(j+1) + " ");
-                                else
-                                System.out.print(matriz[i][j] + " x" + (j+1)+  " ");
-                            }
+    
+        //Transformando matriz inicial em matriz pivô
+        for (i=0;i<prop;i++)                
+            for (k=i+1;k<prop;k++)
+                if ((matriz[i][i])<(matriz[k][i]))
+                    for (j=0;j<=prop;j++){
+                        double temp=matriz[i][j];
+                        matriz[i][j]=matriz[k][j];
+                        matriz[k][j]=temp;
                     }
-                    else
-                    System.out.print(matriz[i][j] + " x" + (j+1) + " ");
-            }
-            else
-            System.out.println(" = " + matriz[i][j] +"\n");
-        }
-      }*/
+    
+        //Imprimindo Matriz Pivô
+        String imprimeMatrizPivo="";
+            for (i=0;i<prop;i++){
+                for (j=0;j<=prop;j++){
+                    imprimeMatrizPivo+=matriz[i][j];
+                    imprimeMatrizPivo+="    ";
+                }
+                imprimeMatrizPivo+="\n";
+            } 
+            JOptionPane.showMessageDialog(null, "MATRIZ PIVÔ:\n" +imprimeMatrizPivo);            
+                
 
 
     }

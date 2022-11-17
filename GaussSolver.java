@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 public class GaussSolver {    
     /**
      * Algoritmo para resolução de sistemas lineares via eliminação de Gauss
@@ -46,6 +48,7 @@ public class GaussSolver {
                     b[m] = b[m] + F * b[k];
                     for (int l = k + 1; l < A.length; l++) {
                         A[m][l] = A[m][l] + F * A[k][l];
+                        JOptionPane.showMessageDialog(null, A[m][l]);
                     }
                 }
             }
@@ -90,8 +93,8 @@ public class GaussSolver {
         x = gaussSolver(A5, b5);
         System.out.printf("\nx1 = %f\nx2 = %f\nx3 = %f\nx4 = %f\n", x[0], x[1], x[2], x[3]);
 
-        double A6[][] = {{4, 1, 2, -3, 5}, {-3, 3, -1, 4, -2}, {-1, 2, 5, 1, 3}, {5, 4, 3, -1, 2}, {1, -2, 3, -4, 5}};
-        double b6[] = {-16, 20, -4, -10, 3};
+        double A6[][] = {{2, 4, 6, 2, 4}, {1, 2, -1, 3, 8}, {-3, 1, -2, 1, -2}, {1, 3, -3, -2, 6}, {3, 7, 2, 1, 4}};
+        double b6[] = {6, 4, 9, 2, 10};
         x = gaussSolver(A6, b6);
         System.out.printf("\nx1 = %f\nx2 = %f\nx3 = %f\nx4 = %f\nx5 = %f\n", x[0], x[1], x[2], x[3], x[4]);
     }
