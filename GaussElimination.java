@@ -10,7 +10,7 @@ public class GaussElimination {
 
         prop= Integer.parseInt(JOptionPane.showInputDialog(null, "Informe a proporção da matriz: "));
         double matriz[][]= new double[prop][prop+1];
-        double matrizResultado[][]= new double[prop][prop+1];
+        double vetorResultado[]= new double[prop];
         JOptionPane.showMessageDialog(null, "Matriz(" + prop +"x" + prop+")"); 
         for (int linha = 0; linha < matriz.length; linha++) {
             for (int coluna = 0; coluna < matriz[linha].length; coluna++) {
@@ -19,7 +19,6 @@ public class GaussElimination {
                 }
                 else {
                     matriz[linha][coluna]= Double.parseDouble(JOptionPane.showInputDialog("Insira o resultado da equação da linha " + (linha + 1) + ": "));
-                    matrizResultado[linha][coluna]=matriz[linha][coluna];
                 }
 
             }
@@ -42,9 +41,9 @@ public class GaussElimination {
             for (k=i+1;k<prop;k++)
                 if ((matriz[i][i])<(matriz[k][i]))
                     for (j=0;j<=prop;j++){
-                        double temp=matriz[i][j];
+                        double pivo=matriz[i][j];
                         matriz[i][j]=matriz[k][j];
-                        matriz[k][j]=temp;
+                        matriz[k][j]=pivo;
                     }
     
         //Imprimindo Matriz Pivô
