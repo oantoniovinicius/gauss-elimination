@@ -1,5 +1,13 @@
-Sistema de Gauss - Cálculo de sistemas lineares
 
-Projeto realizado para a disciplina de Álgebra Linear.
+# Sistema de Gauss
+Projeto realizado para a disciplina de Álgebra Linear, na Universidade Estadual do Sudoeste da Bahia
+## Funcionalidades
 
-O sistema sintetiza o sistema de gauss para a resolução de sistemas lineares.
+- Método para resolução de sistemas lineares.
+
+
+
+## Autores
+
+- [@oantoniovinicius](https://www.github.com/octokatherine)
+
