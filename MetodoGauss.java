@@ -74,7 +74,7 @@ public class MetodoGauss {
         JOptionPane.showMessageDialog(null, "MATRIZ FINAL:\n" +imprimeMatrizFinal);
         
         //Etapa final da resolução do sistema linear
-        double[] vetorAuxiliar = new double[matriz.length]; //esse vetor auxiliar vai armazenar o resultado.
+        double[] vetorAuxiliar = new double[proporcao]; //esse vetor auxiliar vai armazenar o resultado.
         double[] vetorResultado= new double[proporcao]; //Vetor resultado
         for (i=matriz.length - 1; i>=0; i--) {              //o for faz com que os termos do lado direito da matriz
             vetorAuxiliar[i] = matriz[i][proporcao];        //ou seja, os resultados, sejam calculados: a11 + a12 = x1
