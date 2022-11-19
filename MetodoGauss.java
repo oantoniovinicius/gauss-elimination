@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.math.*;
 
 public class MetodoGauss {
     public static void main(String[] args) {
@@ -7,11 +6,11 @@ public class MetodoGauss {
         int k=0;
         int i;
         int j=0;
-        
 
         proporcao= Integer.parseInt(JOptionPane.showInputDialog(null, "ÁLGEBRA LINEAR\n" +
                                  "Método de Gauss\n\nInforme a proporção da matriz: "));
         double matriz[][]= new double[proporcao][proporcao+1]; //Matriz que será utilizada no programa
+        //[Proporção+1] pois essa matriz deve ser uma matriz aumentada, já que a ultima coluna será a coluna de resultados.
 
 
         //Processo de obtenção dos dados da matriz
@@ -29,78 +28,68 @@ public class MetodoGauss {
         }
 
         //Imprimindo Matriz Inicial
-        String imprimeMatriz="";
+        String imprimeMatriz=""; //um método basico para imprimir a matriz percorrendo suas linhas e colunas
         for (i=0;i<proporcao;i++){
             for (j=0;j<=proporcao;j++){
-                imprimeMatriz+=matriz[i][j];
-                imprimeMatriz+="    ";
+                imprimeMatriz+=matriz[i][j]; //o string recebe os valores armazenados na matriz separados
+                imprimeMatriz+="          ";
             }
             imprimeMatriz+="\n";
         }
         JOptionPane.showMessageDialog(null, "MATRIZ INICIAL:\n" +imprimeMatriz);
 
     
-        //"Matriz Pivô"
+        //"Matriz Pivô"-> aqui é realizada a troca da linha 1 com a linha 2.
         for (i=0;i<proporcao;i++){  
             for (k=i+1;k<proporcao;k++){
                 for (j=0;j<=proporcao;j++){
-                    double troca=matriz[i][j];
+                    double troca=matriz[i][j]; //uma variavel troca é usada como auxiliar
                     matriz[i][j]=matriz[k][j];
-                    matriz[k][j]=troca; //realiza a troca entre as linhas da matriz
+                    matriz[k][j]=troca; //realiza a troca entre as linhas da matriz 
                 }
             }  
-        }
-    
-        //Imprimindo Matriz Pivô
-        String imprimeMatrizPivo="";
-            for (i=0;i<proporcao;i++){
-                for (j=0;j<=proporcao;j++){
-                    imprimeMatrizPivo+=matriz[i][j];
-                    imprimeMatrizPivo+="    ";
-                }
-                imprimeMatrizPivo+="\n";
-            } 
-        JOptionPane.showMessageDialog(null, "MATRIZ PIVÔ:\n" +imprimeMatrizPivo);    
-
+        }    
         
         //Escalonamento
-        double aux;
+        double aux; //aqui será armazenado o valor da operação de divisão entre os termos e os coeficientes diagonais
         for (i=0;i<proporcao-1;i++)             
-        for (k=i+1;k<proporcao;k++){
-            aux=matriz[k][i]/matriz[i][i]; //os termos são divididos pelos coeficientes para encontrarmos os valores dos termos completos
-                for (j=0;j<=proporcao;j++)
-                    matriz[k][j]=matriz[k][j]-aux*matriz[i][j]; 
-                    //a partir daqui, os valores abaixo dos termos Pivô estarão zerados
-        }
+            for (k=i+1;k<proporcao;k++){
+                aux=matriz[k][i]/matriz[i][i]; //os termos são divididos pelos coeficientes diagonais
+                                               // para encontrarmos os valores dos termos completos
+                    for (j=0;j<=proporcao;j++)
+                        matriz[k][j]-=aux*matriz[i][j]; //operações elementares serão realizadas aqui
+                        //a partir daqui, os valores abaixo dos termos Pivô estarão zerados
+            }
+        
 
         //Imprimindo Matriz Final
-        String imprimeMatrizFinal="";
+        String imprimeMatrizFinal=""; //um método basico para imprimir a matriz percorrendo suas linhas e colunas
             for (k=0;k<proporcao;k++){
                 for (int q=0;q<=proporcao;q++){
-                    imprimeMatrizFinal+=matriz[k][q];
-                    imprimeMatrizFinal+="    ";
+                    imprimeMatrizFinal+=(String.format("%.2f", matriz[k][q])); //stringformat para garantir maior precisão no resultado
+                    imprimeMatrizFinal+="          ";
                 }
                 imprimeMatrizFinal+="\n";
             } 
         JOptionPane.showMessageDialog(null, "MATRIZ FINAL:\n" +imprimeMatrizFinal);
         
         //Etapa final da resolução do sistema linear
-        double[] X = new double[matriz.length]; //X vai servir como um vetor auxiliar para armazenar o resultado.
-        double vetorResultado[]= new double[proporcao]; //Vetor resultado
+        double[] vetorAuxiliar = new double[matriz.length]; //esse vetor auxiliar vai armazenar o resultado.
+        double[] vetorResultado= new double[proporcao]; //Vetor resultado
         for (i=matriz.length - 1; i>=0; i--) {              //o for faz com que os termos do lado direito da matriz
-            X[i] = matriz[i][proporcao];                         //ou seja, os resultados, sejam calculados: a11 + a12 = x1
+            vetorAuxiliar[i] = matriz[i][proporcao];        //ou seja, os resultados, sejam calculados: a11 + a12 = x1
             for (j = i + 1; j<matriz.length; j++) {
-                X[i] = X[i] - X[j] * matriz[i][j];
-            }
-            X[i] = X[i]/matriz[i][i];
-            vetorResultado[i]=X[i];
+                vetorAuxiliar[i] = vetorAuxiliar[i] - vetorAuxiliar[j] * matriz[i][j]; 
+            } //acima foi realizado a etapa fundamental para encontrarmos o resultado dos coeficientes X's.
+            vetorAuxiliar[i]= vetorAuxiliar[i]/matriz[i][i]; 
+            vetorResultado[i]= vetorAuxiliar[i];
         }
 
         //Imprimindo os valores de x1, x2, ... , xn.
         String imprimeResultadoFinal="";
         for(i=0;i<proporcao;i++) {
             imprimeResultadoFinal+="x" + (i+1) + "= ";
-            imprimeResultadoFinal+=vetorResultado[i];
+            imprimeResultadoFinal+=(String.format("%.2f", vetorResultado[i])); //StringFormat para maior precisão no resultado.
             imprimeResultadoFinal+="\n";
         }
         JOptionPane.showMessageDialog(null,"RESULTADO FINAL:\n" + imprimeResultadoFinal);                      
